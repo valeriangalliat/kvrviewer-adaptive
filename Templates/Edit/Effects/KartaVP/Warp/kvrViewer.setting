@@ -70,7 +70,7 @@ Composition {
 					SourceOp = "kvrViewerEffectsTemplate",
 					Source = "ImageProjection",
 					Width = 1,
-					Default = 2,
+					Default = 1,
 				},
 				FieldOfView = InstanceInput {
 					SourceOp = "kvrViewerEffectsTemplate",
@@ -179,7 +179,7 @@ Composition {
 					CtrlWShown = false,
 					NameSet = true,
 					Inputs = {
-						ImageProjection = Input { Value = 0, },
+						ImageProjection = Input { Value = 1, },
 						Width = Input { Value = 4096, },
 						Height = Input { Value = 4096, },
 						Image1 = Input {

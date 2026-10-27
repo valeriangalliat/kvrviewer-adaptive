@@ -19,6 +19,8 @@ lua.lua_close.argtypes = [ctypes.c_void_p]
 
 source = (root / "Fuses/Kartaverse/KartaVP/Warp/kvrViewer.fuse").read_text()
 template = (root / "Templates/Edit/Effects/KartaVP/Warp/kvrViewer.setting").read_text()
+assert 'ImageProjection = Input { Value = 1, }' in template
+assert 'Default = 1,' in template.split('ImageProjection = InstanceInput {', 1)[1].split('},', 1)[0]
 checks = r'''
 local function near(a, b) assert(math.abs(a - b) < 1e-8, a .. " != " .. b) end
 local function noop() end
@@ -37,6 +39,7 @@ self = {
     BeginControlNest = noop, EndControlNest = noop,
 }
 Create()
+assert(controls.ImageProjection.attrs.INP_Default == 1)
 assert(controls.TinyPlanet.attrs.INP_Default == 1)
 assert(controls.Zoom.attrs.INP_Default == 0.5)
 
