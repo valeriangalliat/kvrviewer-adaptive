@@ -76,3 +76,10 @@ For square pixels, internal KVR zoom is
 1 in 9:16 and stock Zoom 0.5625 in 16:9. Existing animations are not converted.
 180VR retains its original extra multiplier; fisheye keeps its original FOV
 control. Adaptive refers to zoom, not automatic timeline sizing.
+
+## Playback optimizations
+
+Mono 360VR avoids forced GPU-to-CPU input/output transfers. The shader skips
+unused projection calculations while retaining fractional blending. Other
+processing paths keep their readbacks. Playback improved substantially in our
+testing; results depend on the setup. Check a full-quality export too.
