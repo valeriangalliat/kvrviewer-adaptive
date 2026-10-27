@@ -26,6 +26,30 @@ assert 'ICS_ControlPage = "Controls"' in template
 assert 'base64,' not in template
 checks = r'''
 local function near(a, b) assert(math.abs(a - b) < 1e-8, a .. " != " .. b) end
+local function input(value) return {GetValue = function() return {Value = value} end} end
+InWidth, InHeight = input("640"), input("480")
+InOutputFormat = input(0)
+InInputStereo, InAnaglyph, InImageProjection = input(0), input(0), input(1)
+self = {Comp = {GetPrefs = function() error("Must not depend on composition size") end}}
+local w, h = outputSize({})
+assert(w == 1920 and h == 1080)
+InOutputFormat = input(1)
+w, h = outputSize({})
+assert(w == 1080 and h == 1920)
+InOutputFormat = input(0)
+InOutputFormat = input(2)
+InInputStereo = input(0)
+InWidth, InHeight = input("640"), input("480")
+w, h = outputSize({})
+assert(w == 640 and h == 480)
+for _, bad in ipairs({"", "abc", "0", "-1", "1920.5", "16385", "inf"}) do
+    InWidth = input(bad)
+    assert(not pcall(outputSize, {}))
+end
+InWidth, InHeight = input("1080"), input("1080")
+w, h = outputSize({})
+assert(w == 1080 and h == 1080)
+
 local function noop() end
 -- Verify the actual UI definitions and Custom field visibility.
 local controls = {}
@@ -43,10 +67,16 @@ self = {
 }
 Create()
 assert(controls.QualityNotice == nil) -- warning belongs only to the Edit-page wrapper
+assert(controls.OutputFormat.attrs.INP_Default == 0)
 assert(controls.ImageProjection.attrs.INP_Default == 1)
 assert(controls.TinyPlanet.attrs.INP_Default == 1)
 assert(controls.Zoom.attrs.INP_Default == 0.5)
-
+assert(controls.Width.attrs.INPID_InputControl == "TextEditControl")
+assert(controls.Height.attrs.INPID_InputControl == "TextEditControl")
+NotifyChanged(controls.OutputFormat, {Value = 2}, 0)
+assert(controls.Width.attrs.IC_Visible and controls.Height.attrs.IC_Visible)
+NotifyChanged(controls.OutputFormat, {Value = 0}, 0)
+assert(not controls.Width.attrs.IC_Visible and not controls.Height.attrs.IC_Visible)
 '''
 state = lua.luaL_newstate()
 try:

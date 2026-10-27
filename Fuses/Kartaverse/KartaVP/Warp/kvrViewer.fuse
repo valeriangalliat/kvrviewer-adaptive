@@ -766,29 +766,34 @@ function Create()
 		})
 	self:EndControlNest()
 	self:BeginControlNest("Image", "ImageNest", true, {})
-		InAutoResolution = self:AddInput("Auto Resolution", "AutoResolution", {
+		InOutputFormat = self:AddInput("Output Resolution", "OutputFormat", {
 			LINKID_DataType = "Number",
-			INPID_InputControl = "CheckboxControl",
+			INPID_InputControl = "ComboControl",
 			INP_DoNotifyChanged = true,
-			INP_Default = 1.0,
+			INP_Default = 0,
 			INP_Integer = true,
 			ICD_Width = 1,
+			{CCS_AddString = "1080p Landscape (1920 x 1080)"},
+			{CCS_AddString = "1080p Portrait (1080 x 1920)"},
+			{CCS_AddString = "Custom"},
 		})
 		InWidth = self:AddInput("Width", "Width", {
-			LINKID_DataType = "Number",
-			INPID_InputControl = "SliderControl",
-			INP_MinScale = 1,
-			INP_MaxScale = 16384,
-			INP_Default = 3840,
-			INP_Integer = true,
+			LINKID_DataType = "Text",
+			INPID_InputControl = "TextEditControl",
+			INPS_DefaultText = "1920",
+			TEC_Lines = 1,
+			TEC_CharLimit = 5,
+			INP_External = false,
+			IC_Visible = false,
 		})
 		InHeight = self:AddInput("Height", "Height", {
-			LINKID_DataType = "Number",
-			INPID_InputControl = "SliderControl",
-			INP_MinScale = 1,
-			INP_MaxScale = 16384,
-			INP_Default = 2160,
-			INP_Integer = true,
+			LINKID_DataType = "Text",
+			INPID_InputControl = "TextEditControl",
+			INPS_DefaultText = "1080",
+			TEC_Lines = 1,
+			TEC_CharLimit = 5,
+			INP_External = false,
+			IC_Visible = false,
 		})
 	self:EndControlNest()
 	-- Circular Fisheye Masking
@@ -884,7 +889,10 @@ function NotifyChanged(inp, param, time)
 		:param time: Current frame number.
 		:type time: float
 	]]
-	if inp == InInputStereo then
+	if inp == InOutputFormat then
+		InWidth:SetAttrs({IC_Visible = param.Value == 2})
+		InHeight:SetAttrs({IC_Visible = param.Value == 2})
+	elseif inp == InInputStereo then
 		local visible1
 		local visible2
 		if param.Value == 1.0 then visible1 = true else visible1 = false end
@@ -932,10 +940,26 @@ end
 
 local lastreqtime = -2
 
+local function outputSize(req)
+	local format = InOutputFormat:GetValue(req).Value
+	local w, h
+	if format == 0 then
+		w, h = 1920, 1080
+	elseif format == 1 then
+		w, h = 1080, 1920
+	else
+		assert(format == 2, "kvrViewer Adaptive: invalid output preset")
+		w = tonumber(InWidth:GetValue(req).Value)
+		h = tonumber(InHeight:GetValue(req).Value)
+		assert(w and h and w >= 1 and h >= 1 and w <= 16384 and h <= 16384
+			and w % 1 == 0 and h % 1 == 0,
+			"kvrViewer Adaptive: custom Width and Height must be whole pixels from 1 to 16384")
+	end
+	return w, h
+end
+
 function processEye(req, img, eye)
-	local autoResolution = InAutoResolution:GetValue(req).Value
-	local w = InWidth:GetValue(req).Value
-	local h = InHeight:GetValue(req).Value
+	local w, h = outputSize(req)
 
 	local inputStereo = InInputStereo:GetValue(req).Value 
 	local converge = InConvergence:GetValue(req).Value * eye
@@ -955,7 +979,7 @@ function processEye(req, img, eye)
 	local src = img
 	local dst
 
-	if autoResolution == 1 or autoResolution == true or imageProjection == 0 then
+	if imageProjection == 0 then
 		dst = Image{
 			IMG_Like = src,
 			IMG_Depth = IMDP_128bitFloat,
@@ -1212,9 +1236,7 @@ function Process(req)
 	local img1 = InImage1:GetValue(req)
 	local img2 = InImage2:GetValue(req)
 
-	local autoResolution = InAutoResolution:GetValue(req).Value
-	local w = InWidth:GetValue(req).Value
-	local h = InHeight:GetValue(req).Value
+	local w, h = outputSize(req)
 
 	local imageProjection = InImageProjection:GetValue(req).Value
 	local inputStereo = InInputStereo:GetValue(req).Value
@@ -1319,7 +1341,7 @@ function Process(req)
 		end
 
 		local dstStereo
-		if autoResolution == 1 or autoResolution == true or imageProjection == 0 then
+		if imageProjection == 0 then
 			dstStereo = Image({
 				IMG_Like = img1,
 				IMG_Width = img1.Width,
@@ -1405,7 +1427,7 @@ function Process(req)
 		end
 
 		local dstStereo
-		if autoResolution == 1 or autoResolution == true or imageProjection == 0 then
+		if imageProjection == 0 then
 			dstStereo = Image({
 				IMG_Like = img1,
 				IMG_Width = img1.Width,

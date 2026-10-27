@@ -57,3 +57,10 @@ Edit-page effect received a 5760×2880 panorama already resized to 1080×1920;
 direct Fusion received the full source. Stretch fixes the Edit-page input layout
 but cannot recover lost detail. Its wrapper shows a warning at the top of
 Controls, without duplicating the logo. Direct Fusion nodes have no warning.
+
+## Output resolution
+
+Choose 1920×1080, 1080×1920, or Custom. Custom shows two text-entry fields for
+whole-pixel dimensions from 1 to 16384. Landscape is the default. Explicit sizes
+replace Auto, which followed input dimensions rather than the delivery format.
+Flat projection still passes its input through unchanged.
