@@ -273,24 +273,32 @@ __DEVICE__ float4 Viewer(__TEXTURE2D__ src, float2 uv, float aspect, float pitch
 	dir.y /= aspect;
 	dir.z = fov;
 
-	// Tiny Planet Code
-	float3 tinyplanet = tinyPlanetSph(dir);
-	tinyplanet = normalize(tinyplanet);
+	// Projection settings are uniform across the frame. Skip unused paths,
+	// while retaining upstream blending for fractional control values.
+	float3 rectdir = to_float3_s(0.0f);
+	if (isRectilinear != 0.0f) {
+		rectdir = multi2(rollMat, dir);
+		rectdir = multi2(pitchMat, rectdir);
+		rectdir = multi2(yawMat, rectdir);
+		rectdir = normalize(rectdir);
+	}
 
-	tinyplanet = multi2(rollMat, tinyplanet);
-	tinyplanet = multi2(pitchMat, tinyplanet);
-	tinyplanet = multi2(yawMat, tinyplanet);
-
-	// RectDir Code
-	float3 rectdir = dir;
-	rectdir = multi2(rollMat, rectdir);
-	rectdir = multi2(pitchMat, rectdir);
-	rectdir = multi2(yawMat, rectdir);
-
-	rectdir = normalize(rectdir);
-
-	dir = mix3(fisheyeDir(dir, yaw, pitch, roll), tinyplanet, isTinyplanet);
-	dir = mix3(dir, rectdir, isRectilinear);
+	float3 projected = to_float3_s(0.0f);
+	if (isRectilinear != 1.0f) {
+		float3 tinyplanet = to_float3_s(0.0f);
+		if (isTinyplanet != 0.0f) {
+			tinyplanet = normalize(tinyPlanetSph(dir));
+			tinyplanet = multi2(rollMat, tinyplanet);
+			tinyplanet = multi2(pitchMat, tinyplanet);
+			tinyplanet = multi2(yawMat, tinyplanet);
+		}
+		if (isTinyplanet == 1.0f) {
+			projected = tinyplanet;
+		} else {
+			projected = mix3(fisheyeDir(dir, yaw, pitch, roll), tinyplanet, isTinyplanet);
+		}
+	}
+	dir = mix3(projected, rectdir, isRectilinear);
 
 	float2 iuv = polarCoord(dir);
 
@@ -1149,8 +1157,10 @@ function processEye(req, img, eye)
 			dump(node:GetErrorLog())
 		end
 
-		-- Required to be able to post-crop the image
-		dst:DownloadGPUMem(req)
+		-- Stereo packing needs CPU pixels; mono 360VR can stay on the GPU.
+		if inputStereo ~= 0 or imageProjection ~= 1 then
+			dst:DownloadGPUMem(req)
+		end
 
 		-- Force the updated Metadata Lua table back into the output
 		dst.Metadata = meta
@@ -1255,8 +1265,10 @@ function Process(req)
 	local left
 	local right
 
-	-- Required to pre-crop the image
-	img1:DownloadGPUMem(req)
+	-- Mono 360VR does not crop/pad its input before the GPU kernel.
+	if inputStereo ~= 0 or imageProjection ~= 1 then
+		img1:DownloadGPUMem(req)
+	end
 
 	-- Input Cropping
 	if inputStereo == 0 then

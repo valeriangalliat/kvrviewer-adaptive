@@ -114,6 +114,20 @@ for _, planet in ipairs({0, 1}) do
         end
     end
 end
+InImage1 = {GetValue = function() return src end}
+InImage2 = {GetValue = function() return nil end}
+InSwapEyes = input(0)
+OutImage1 = {Set = function(_, _, img) assert(img.Width == 1920 and img.Height == 1080) end}
+for _, planet in ipairs({0, 1}) do
+    InTinyPlanet = input(planet)
+    for _, projection in ipairs({1, 2}) do
+        InImageProjection = input(projection)
+        readbacks = 0
+        Process(req)
+        assert(readbacks == (projection == 1 and 0 or 2))
+    end
+end
+
 -- Verify the actual UI definitions and Custom field visibility.
 local controls = {}
 self = {
