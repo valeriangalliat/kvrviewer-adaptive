@@ -49,3 +49,11 @@ Resolve.
 
 The Edit-page wrapper defaults to 360VR, matching direct Fusion use. Other
 projection and stereo defaults are unchanged.
+
+## Source quality
+
+Use the node directly in Fusion for full source quality. In our tests, the
+Edit-page effect received a 5760×2880 panorama already resized to 1080×1920;
+direct Fusion received the full source. Stretch fixes the Edit-page input layout
+but cannot recover lost detail. Its wrapper shows a warning at the top of
+Controls, without duplicating the logo. Direct Fusion nodes have no warning.
