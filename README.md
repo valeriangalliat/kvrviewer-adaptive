@@ -64,3 +64,15 @@ Choose 1920×1080, 1080×1920, or Custom. Custom shows two text-entry fields for
 whole-pixel dimensions from 1 to 16384. Landscape is the default. Explicit sizes
 replace Auto, which followed input dimensions rather than the delivery format.
 Flat projection still passes its input through unchanged.
+
+## Long-Edge Zoom
+
+Zoom keeps the same coverage along the longest output edge across portrait,
+landscape, and square. It uses the original control and on-screen handle in both
+perspective and Tiny Planet modes, with a default of 0.5.
+
+For square pixels, internal KVR zoom is
+`longEdgeZoom / min(1, width / height)`. Long-Edge Zoom 0.5625 matches stock Zoom
+1 in 9:16 and stock Zoom 0.5625 in 16:9. Existing animations are not converted.
+180VR retains its original extra multiplier; fisheye keeps its original FOV
+control. Adaptive refers to zoom, not automatic timeline sizing.
