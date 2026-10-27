@@ -44,6 +44,7 @@ Composition {
 			CtrlWZoom = false,
 			NameSet = true,
 			Inputs = ordered() {
+				QualityNotice = Input { Value = 0, },
 				Label = InstanceInput {
 					SourceOp = "kvrViewerEffectsTemplate",
 					Source = "Label",
@@ -155,6 +156,19 @@ Composition {
 					SourceOp = "PipeRouter1",
 					Source = "Input",
 				}
+			},
+			UserControls = ordered() {
+				QualityNotice = {
+					ICS_ControlPage = "Controls",
+					LINKS_Name = "For full source quality, add the kvrViewer Adaptive node directly in Fusion. Edit-page effects can receive footage resized to timeline resolution.",
+					LINKID_DataType = "Number",
+					INPID_InputControl = "LabelControl",
+					LBLC_MultiLine = true,
+					INP_External = false,
+					INP_Passive = true,
+					IC_NoLabel = true,
+					IC_NoReset = true,
+				},
 			},
 			Outputs = {
 				MainOutput1 = InstanceOutput {
