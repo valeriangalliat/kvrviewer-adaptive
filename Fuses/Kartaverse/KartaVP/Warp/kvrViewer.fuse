@@ -46,11 +46,11 @@ Todos
 
 --]]--
 
-FuRegisterClass("kvrViewer", CT_Tool, {
-	REGS_Name = "kvrViewer",
+FuRegisterClass("kvrViewerAdaptive", CT_Tool, {
+	REGS_Name = "kvrViewer Adaptive",
 	REGS_Category = "Kartaverse\\KartaVP\\Warp",
 
-	REGS_OpIconString = "kvrViewer",
+	REGS_OpIconString = "kvrViewerAdaptive",
 	REGS_OpDescription = "An interactive viewer for panoramic videos.",
 
 	REGS_Company = "Andrew Hazelden",

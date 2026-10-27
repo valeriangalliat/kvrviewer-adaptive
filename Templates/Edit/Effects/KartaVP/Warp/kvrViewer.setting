@@ -40,7 +40,7 @@ Composition {
 			},
 			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
 		},
-		kvrViewer1 = GroupOperator {
+		kvrViewerAdaptive = GroupOperator {
 			CtrlWZoom = false,
 			NameSet = true,
 			Inputs = ordered() {
@@ -175,7 +175,7 @@ Composition {
 				Offset = { 0, 0 }
 			},
 			Tools = ordered() {
-				kvrViewerEffectsTemplate = Fuse.kvrViewer {
+				kvrViewerEffectsTemplate = Fuse.kvrViewerAdaptive {
 					CtrlWShown = false,
 					NameSet = true,
 					Inputs = {
