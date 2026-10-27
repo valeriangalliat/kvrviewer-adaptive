@@ -1,0 +1,765 @@
+Composition {
+	CurrentTime = 1,
+	RenderRange = { 1, 144 },
+	GlobalRange = { 1, 144 },
+	CurrentID = 186,
+	HiQ = true,
+	PlaybackUpdateMode = 0,
+	StereoMode = false,
+	Version = "Fusion Studio 19.0 build 39",
+	SavedOutputs = 2,
+	HeldTools = 0,
+	DisabledTools = 0,
+	LockedTools = 0,
+	AudioOffset = 0,
+	AutoRenderRange = true,
+	Resumable = true,
+	OutputClips = {
+	},
+	Tools = {
+		Loader1_2 = Loader {
+			Clips = {
+				Clip {
+					ID = "Clip1",
+					Filename = "Reactor:/Deploy/Macros/KartaVR/Images/fulldome_2K.jpg",
+					FormatID = "JpegFormat",
+					StartFrame = -1,
+					LengthSetManually = true,
+					TrimIn = 0,
+					TrimOut = 0,
+					ExtendFirst = 0,
+					ExtendLast = 0,
+					Loop = 0,
+					AspectMode = 0,
+					Depth = 0,
+					TimeCode = 0,
+					GlobalStart = 1,
+					GlobalEnd = 1
+				}
+			},
+			Inputs = {
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 215.442, -519.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Loader5 = Loader {
+			Clips = {
+				Clip {
+					ID = "Clip1",
+					Filename = "Reactor:/Deploy/Macros/KartaVR/Images/RED Digital V-Raptor 8K With Canon RF5.2mm Dual Fisheye Lens.jpg",
+					FormatID = "JpegFormat",
+					StartFrame = -1,
+					LengthSetManually = true,
+					TrimIn = 0,
+					TrimOut = 0,
+					ExtendFirst = 0,
+					ExtendLast = 0,
+					Loop = 0,
+					AspectMode = 0,
+					Depth = 0,
+					TimeCode = 0,
+					GlobalStart = 1,
+					GlobalEnd = 1
+				}
+			},
+			Inputs = {
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 0, 346.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Loader1_1 = Loader {
+			Clips = {
+				Clip {
+					ID = "Clip1",
+					Filename = "Reactor:/Deploy/Macros/KartaVR/Images/latlong_nightsky_in_forest.jpg",
+					FormatID = "JpegFormat",
+					StartFrame = -1,
+					LengthSetManually = true,
+					TrimIn = 0,
+					TrimOut = 0,
+					ExtendFirst = 0,
+					ExtendLast = 0,
+					Loop = 0,
+					AspectMode = 0,
+					Depth = 0,
+					TimeCode = 0,
+					GlobalStart = 1,
+					GlobalEnd = 1
+				}
+			},
+			Inputs = {
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 165, 82.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Loader1 = Loader {
+			Clips = {
+				Clip {
+					ID = "Clip1",
+					Filename = "Reactor:/Deploy/Macros/KartaVR/Images/latlong_wide_ar.jpg",
+					FormatID = "JpegFormat",
+					StartFrame = -1,
+					LengthSetManually = true,
+					TrimIn = 0,
+					TrimOut = 0,
+					ExtendFirst = 0,
+					ExtendLast = 0,
+					Loop = 0,
+					AspectMode = 0,
+					Depth = 0,
+					TimeCode = 0,
+					GlobalStart = 1,
+					GlobalEnd = 1
+				}
+			},
+			Inputs = {
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, }
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, -214.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Underlay1 = Underlay {
+			ViewInfo = UnderlayInfo {
+				Pos = { 330, -379.5 },
+				Size = { 503.667, 236.909 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		kvrViewer2 = Fuse.kvrViewer {
+			NameSet = true,
+			Inputs = {
+				Center = Input { Value = { 0.544447934790847, 0.23630704935925 }, },
+				Angle = Input { Value = -8.42126262667614, },
+				Zoom = Input { Value = 0.127500202429269, },
+				Convergence = Input { Value = 0.261, },
+				AutoResolution = Input { Value = 0, },
+				Width = Input { Value = 2160, },
+				Image1 = Input {
+					SourceOp = "ColorCorrector1",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 495, 82.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, },
+			Version = 500
+		},
+		fisheye_kvrViewer3 = Fuse.kvrViewer {
+			NameSet = true,
+			CustomData = {
+				Settings = {
+				}
+			},
+			Inputs = {
+				Zoom = Input { Value = 0.625538377501707, },
+				ImageProjection = Input { Value = 3, },
+				FieldOfView = Input { Value = 190, },
+				InputStereo = Input { Value = 2, },
+				SolidAlpha = Input { Value = 1, },
+				MaskingNest = Input { Value = 1, },
+				CircularMaskDiameter = Input { Value = 0.9, },
+				CircularMaskSoftness = Input { Value = 0.126, },
+				Image1 = Input {
+					SourceOp = "kvrLensStereo1",
+					Source = "Output1",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 550, 346.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, },
+			Version = 500
+		},
+		Underlay0 = Underlay {
+			NameSet = true,
+			ViewInfo = UnderlayInfo {
+				Pos = { 325.442, -684.5 },
+				Size = { 503.667, 236.909 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Note0 = Note {
+			NameSet = true,
+			Inputs = {
+				Comments = Input { Value = "View domemaster formatted 180 degree angular fisheye content. The kvrViewer node's \"Dome Tilt Angle\" control allows a compensation to happen for a tilted fulldome theatre screen.", }
+			},
+			ViewInfo = StickyNoteInfo {
+				Pos = { 215.442, -618.5 },
+				Flags = {
+					Expanded = true
+				},
+				Size = { 345.926, 63.605 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		kvrLensStereo1 = Fuse.kvrLensStereo {
+			Inputs = {
+				LensModel = Input { Value = 1, },
+				a = Input { Value = -0.047, },
+				b = Input { Value = -0.02, },
+				c = Input { Value = 0.059, },
+				InputStereo = Input { Value = 2, },
+				Image1 = Input {
+					SourceOp = "kvrCropStereo3",
+					Source = "Output1",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 440, 346.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, },
+			Version = 500
+		},
+		kvrViewer0 = Fuse.kvrViewer {
+			NameSet = true,
+			Inputs = {
+				Zoom = Input { Value = 0.4353479636962, },
+				ImageProjection = Input { Value = 3, },
+				DomeTiltAngle = Input { Value = 64, },
+				TinyPlanet = Input { Value = 0, },
+				Image1 = Input {
+					SourceOp = "Loader1_2",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 435.442, -519.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, },
+			Version = 500
+		},
+		Note1 = Note {
+			NameSet = true,
+			Inputs = {
+				Comments = Input { Value = "View 360VR content.", }
+			},
+			ViewInfo = StickyNoteInfo {
+				Pos = { 220, -313.5 },
+				Flags = {
+					Expanded = true
+				},
+				Size = { 345.926, 47.7562 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		ColorCorrector1 = ColorCorrector {
+			Inputs = {
+				WheelSaturation1 = Input { Value = 1.488, },
+				WheelTintAngle1 = Input { Value = -0.362123712703048, },
+				WheelTintLength1 = Input { Value = 0.1606, },
+				ColorRanges = Input {
+					Value = ColorCurves {
+						Curves = {
+							{
+								Points = {
+									{ 0, 1 },
+									{ 0.4, 0.2 },
+									{ 0.6, 0 },
+									{ 1, 0 }
+								}
+							},
+							{
+								Points = {
+									{ 0, 0 },
+									{ 0.4, 0 },
+									{ 0.6, 0.2 },
+									{ 1, 1 }
+								}
+							}
+						}
+					},
+				},
+				HistogramIgnoreTransparent = Input { Value = 1, },
+				Input = Input {
+					SourceOp = "Loader1_1",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 330, 82.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Note2 = Note {
+			NameSet = true,
+			Inputs = {
+				Comments = Input { Value = "Reframe 360VR footage into tiny planets. Turning off the Auto Resolution checkbox allows custom image width and height values to be defined. This makes it possible to output 1:1 square or 9:16 vertical format content for social media.", }
+			},
+			ViewInfo = StickyNoteInfo {
+				Pos = { 165, -16.5 },
+				Flags = {
+					Expanded = true
+				},
+				Size = { 390.593, 61.5378 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Note3 = Note {
+			NameSet = true,
+			Inputs = {
+				Comments = Input { Value = "Stitch dual fisheye 180VR content from a RED Digital V-Raptor 8K camera body and Canon RF 5.2mm dual fisheye stereo lens. Sample footage provided by Hugh Hou Films.", }
+			},
+			ViewInfo = StickyNoteInfo {
+				Pos = { 0, 214.5 },
+				Flags = {
+					Expanded = true
+				},
+				Size = { 644.593, 105.938 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		Underlay3 = Underlay {
+			NameSet = true,
+			ViewInfo = UnderlayInfo {
+				Pos = { 330, 181.5 },
+				Size = { 823.334, 235.932 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		kvrCropStereo3 = Fuse.kvrCropStereo {
+			Inputs = {
+				Center1 = Input { Value = { 0.257085059497576, 0.499598169555939 }, },
+				Width1 = Input { Value = 0.475, },
+				Height1 = Input { Value = 0.824, },
+				Center2 = Input { Value = { 0.744032395566922, 0.505748251748252 }, },
+				Width2 = Input { Value = 0.475, },
+				Height2 = Input { Value = 0.824, },
+				SwapEyes = Input { Value = 1, },
+				Image1 = Input {
+					SourceOp = "ColorCorrector2",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 330, 346.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, },
+			Version = 500
+		},
+		Underlay2 = Underlay {
+			ViewInfo = UnderlayInfo {
+				Pos = { 330, -49.5 },
+				Size = { 502, 205.394 }
+			},
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		kvrViewer1 = Fuse.kvrViewer {
+			Inputs = {
+				Center = Input { Value = { 0.438565581849671, 0.385326657202387 }, },
+				Zoom = Input { Value = 0.4353479636962, },
+				TinyPlanet = Input { Value = 0, },
+				Image1 = Input {
+					SourceOp = "Loader1",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 440, -214.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, },
+			Version = 500
+		},
+		ColorSpaceTransform1 = ColorSpaceTransform {
+			Inputs = {
+				InputColorSpace = Input { Value = FuID { "RWG_COLORSPACE" }, },
+				SrcLumMax = Input { Disabled = true, },
+				DstLumMax = Input { Disabled = true, },
+				Input = Input {
+					SourceOp = "Loader5",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 110, 346.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		ColorCorrector2 = ColorCorrector {
+			NameSet = true,
+			Inputs = {
+				Menu = Input { Value = 1, },
+				MasterRGBLow = Input { Value = 0.045, },
+				MasterRGBHigh = Input { Value = 0.663, },
+				ColorRanges = Input {
+					Value = ColorCurves {
+						Curves = {
+							{
+								Points = {
+									{ 0, 1 },
+									{ 0.4, 0.2 },
+									{ 0.6, 0 },
+									{ 1, 0 }
+								}
+							},
+							{
+								Points = {
+									{ 0, 0 },
+									{ 0.4, 0 },
+									{ 0.6, 0.2 },
+									{ 1, 1 }
+								}
+							}
+						}
+					},
+				},
+				HistogramIgnoreTransparent = Input { Value = 1, },
+				Input = Input {
+					SourceOp = "ColorSpaceTransform1",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 220, 346.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, }
+		},
+		vr_kvrViewer3 = Fuse.kvrViewer {
+			CtrlWZoom = false,
+			NameSet = true,
+			Inputs = {
+				ImageProjection = Input { Value = 2, },
+				InputStereo = Input { Value = 2, },
+				SolidAlpha = Input { Value = 1, },
+				Image1 = Input {
+					SourceOp = "fisheye_kvrViewer3",
+					Source = "Output1",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 660, 346.5 } },
+			Colors = { TileColor = { R = 0.266666666666667, G = 0.56078431372549, B = 0.396078431372549 }, },
+			Version = 500
+		}
+	},
+	Frames = {
+		{
+			FrameTypeID = "ChildFrame",
+			Mode = 3,
+			LayoutPreset = 0,
+			PresetName = "Default",
+			Left = 0,
+			Top = 27,
+			Width = 1635,
+			Height = 852,
+			ZoneInfo = {
+				AuxRight = { Expanded = true },
+				["!Left"] = {
+				},
+				AuxLeft = { Expanded = true },
+				Right = { Expanded = true, },
+				Left = { Expanded = false, },
+				["!Right"] = {
+				}
+			},
+			ViewInfo = {
+				Viewer1 = { Show = true, RatioY = 0.01, RatioX = 0.995873452544706, },
+				InnerLeft = {
+				},
+				MainSplit = {
+					RatioX = 100,
+					RatioY = 1.26043165467626,
+				},
+				CenterSplit = {
+					RatioX = 1.04484306894962,
+					RatioY = 100,
+				},
+				Viewer2 = { Show = true, RatioY = 0.01, RatioX = 1.0041265474553, },
+				Comments = { Show = false },
+				Time = { Show = true, RatioX = 100, },
+				InnerColumns = {
+					RatioX = 100,
+					RatioY = 1.73956834532374,
+				},
+				Keyframes = { Show = false, },
+				LayoutStrip = { Show = true, RatioX = 100, },
+				Inspector = { Show = true, RatioY = 1, RatioX = 100, },
+				InnerRight = {
+				},
+				MediaPool = { Show = false, },
+				OuterColumns = {
+					RatioX = 100,
+					RatioY = 1,
+				},
+				Effects = { Show = false, },
+				Clips = { Show = false, },
+				Metadata = { Show = false, },
+				OuterLeft = {
+				},
+				ViewerSplit = {
+					RatioX = 100,
+					RatioY = 1,
+				},
+				Nodes = { Show = true, RatioY = 100, RatioX = 1, },
+				OuterRight = {
+					PixelX = 490,
+					RatioY = 100,
+				},
+				ActionStrip = { Show = false, Adjust = true, MRU = 0, RatioX = 100, },
+				Spline = { Show = false, }
+			},
+			Views = ordered() {
+				Effects = MultiView {
+					Active = "EffectView",
+					ViewList = ordered() {
+						EffectView = "EffectView"
+					},
+				},
+				Nodes = MultiView {
+					Active = "FlowView",
+					ViewList = ordered() {
+						FlowView = "FlowView"
+					},
+					FlowView = FlowView {
+						Flags = {
+							Navigator = true,
+							AutoHideNavigator = true,
+							AutoSnap = true,
+							RemoveRouters = true
+						},
+						NavigatorSize = { 200, 140 },
+						Direction = "Horizontal",
+						PipeStyle = "Direct",
+						RootScale = 0.735453,
+						RootOffset = { 103.31, -163.058 }
+					}
+				},
+				Keyframes = MultiView {
+					Active = "TimelineView",
+					ViewList = ordered() {
+						TimelineView = "TimelineView"
+					},
+					TimelineView = TimelineView {
+						TreeControlState = {
+						},
+						DisplayMode = "All Tools",
+						ShowCurrentTimeTools = false,
+						Filter = "Show All",
+						ShowSelectedTools = false,
+						ShowAnimatedToolsOnly = false,
+						ShowEditBoxes = false,
+						KeyFrameView = {
+							Position = { Left = 232, Bottom = 320 },
+							ScaleX = 0.306627680311891,
+							OffsetX = -6.13255360623782,
+							OffsetY = 0,
+							AutoScaling = "scroll",
+							AutoSnapTo = "frame",
+							AutoSnapToGuidelines = false,
+							GuidelinesGrabEnabled = true,
+							GuidelinesSnapTo = "frame"
+						},
+						Spreadsheet = { LeftPos = 232, Visible = false }
+					}
+				},
+				Spline = MultiView {
+					Active = "SplineView",
+					ViewList = ordered() {
+						SplineView = "SplineEditorView"
+					},
+					SplineView = SplineEditorView {
+						LeftPos = 264,
+						ScaleX = 0.2,
+						ScaleY = 0.00338983050847458,
+						OffsetX = -3.4,
+						OffsetY = 0,
+						AutoScaling = "scroll",
+						AutoSnapTo = "frame",
+						AutoSnapToGuidelines = false,
+						GuidelinesSnapTo = "frame",
+						ShowKeyMarkers = false,
+						IndependentHandles = false,
+						ShowNonSplineModifiers = false,
+						GuidelinesGrabEnabled = true,
+						ShowOneToolOnly = false,
+						ShowSelectedTools = false,
+						ShowAllInputs = false,
+						Filter = "Show All"
+					}
+				},
+				Inspector = MultiView {
+					Active = "Tools",
+					ViewList = ordered() {
+						Tools = "ControlView",
+						Modifiers = "ModifierView"
+					},
+				},
+				Viewer1 = MultiView {
+					Active = "LeftView",
+					ViewList = ordered() {
+						LeftView = "PreviewContainer"
+					},
+				},
+				Viewer2 = MultiView {
+					Active = "RightView",
+					ViewList = ordered() {
+						RightView = "PreviewContainer"
+					},
+				},
+				Time = "TimeView",
+				ActionStrip = "ActionStripView",
+				LayoutStrip = "LayoutStripView"
+			},
+			Layout = {
+				{ ID = "LayoutStrip", FixedY = 36, Resolve = false, Flat = true },
+				{
+					{
+						{ ID = "MediaPool", Fusion = false, RatioX = 1 },
+						{ ID = "Effects", RatioX = 1 },
+						Zone = "Left",
+						Rows = 2,
+						PaneID = "OuterLeft",
+						PixelX = 420
+					},
+					{
+						{
+							{
+								{ ID = "MediaPool", Fusion = false, RatioX = 1 },
+								{ ID = "Effects", RatioX = 1 },
+								PaneID = "InnerLeft",
+								MaxViews = 1,
+								PixelX = 420,
+								Rows = 2,
+								Zone = "!Left"
+							},
+							{
+								{
+									{ ID = "Viewer1", RatioY = 0.01, RatioX = 1 },
+									{ ID = "Viewer2", RatioX = 1 },
+									RatioY = 1,
+									Columns = 2,
+									PaneID = "ViewerSplit"
+								},
+								{ ID = "Time", FixedY = 83, Flat = true },
+								RatioX = 1,
+								Rows = 2
+							},
+							{
+								{ ID = "Inspector", RatioY = 1 },
+								{ ID = "Metadata", RatioY = 1, Fusion = false },
+								PaneID = "InnerRight",
+								MaxViews = 1,
+								PixelX = 420,
+								Rows = 2,
+								Zone = "!Right"
+							},
+							RatioY = 2,
+							Columns = 3,
+							PaneID = "InnerColumns"
+						},
+						{ ID = "ActionStrip", FixedY = 50, Flat = true },
+						{
+							{ ID = "Nodes", RatioX = 1 },
+							{ ID = "Spline", RatioX = 1 },
+							{ ID = "Keyframes", RatioX = 1 },
+							RatioY = 1,
+							Columns = 3,
+							PaneID = "MainSplit"
+						},
+						{ Fusion = false, ID = "Clips", LARGE_FixedY = 160, MEDIUM_FixedY = 138, SMALL_FixedY = 110 },
+						RatioX = 1,
+						Rows = 4,
+						PaneID = "CenterSplit"
+					},
+					{
+						{ ID = "Inspector", RatioY = 1 },
+						{ ID = "Metadata", RatioY = 1, Fusion = false },
+						Zone = "Right",
+						Rows = 2,
+						PaneID = "OuterRight",
+						PixelX = 420
+					},
+					RatioY = 1,
+					Columns = 3,
+					PaneID = "OuterColumns"
+				},
+				RatioX = 1,
+				Rows = 2,
+				RatioY = 1
+			},
+			TopBar = {
+				Left = { "Left", "MediaPool", "Effects", "Clips", "Nodes", "Console" },
+				Right = { "Spline", "Keyframes", "Metadata", "Inspector", "Right" }
+			}
+		}
+	},
+	Prefs = {
+		Comp = {
+			Views = {
+				RightView = {
+					Viewer = {
+						ScaleMode = 1,
+						ShowControls = true
+					},
+					SideB = {
+						PrevCtrlInactiveColor = 4278255360,
+						PickW = 1,
+						PickH = 1,
+						PrevCtrlActiveColor = 4278190335,
+						Viewer = {
+							EnableLUTs = false,
+							LUTPlugin = "FusionViewLUT",
+							FitMarginY = 0,
+							FitMarginX = 0,
+							FitMarginType = 0,
+							FarZ = -1000,
+							NearZ = 0
+						}
+					},
+				},
+				LeftView = {
+					Viewer = {
+						ShowControls = true,
+						CheckerUnderlay = false,
+						ScaleMode = 1,
+					},
+					SideB = {
+						PrevCtrlInactiveColor = 4278255360,
+						PickW = 1,
+						PickH = 1,
+						PrevCtrlActiveColor = 4278190335,
+						Viewer = {
+							EnableLUTs = false,
+							LUTPlugin = "FusionViewLUT",
+							FitMarginY = 0,
+							FitMarginX = 0,
+							FitMarginType = 0,
+							FarZ = -1000,
+							NearZ = 0
+						}
+					},
+				},
+				View1 = {
+					PrevCtrlInactiveColor = 4278255360,
+					PickW = 1,
+					SideB = {
+						PrevCtrlInactiveColor = 4278255360,
+						PickW = 1,
+						PickH = 1,
+						PrevCtrlActiveColor = 4278190335,
+						Viewer = {
+							EnableLUTs = false,
+							LUTPlugin = "FusionViewLUT",
+							FitMarginY = 0,
+							FitMarginX = 0,
+							FitMarginType = 0,
+							FarZ = -1000,
+							NearZ = 0
+						}
+					},
+					PickH = 1,
+					PrevCtrlActiveColor = 4278190335,
+					AlwaysOnTop = true,
+					FullScreen = false
+				},
+				View2 = {
+					PickH = 1,
+					PickW = 1,
+					AlwaysOnTop = true,
+					FullScreen = false
+				}
+			},
+			Paths = {
+				Map = {
+				},
+			},
+			FrameFormat = {
+				GuideRatio = 1.77777777777778,
+				DepthFull = 3,
+				DepthPreview = 3,
+				DepthInteractive = 3,
+			},
+			Unsorted = {
+				GlobalStart = 1,
+				GlobalEnd = 144
+			},
+			QuickTime = {
+			}
+		}
+	},
+}
+

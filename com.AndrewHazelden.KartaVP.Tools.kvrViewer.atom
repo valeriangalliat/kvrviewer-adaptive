@@ -1,0 +1,26 @@
+Atom {
+	Name = "KartaVP Tools | kvrViewer",
+	Category = "Kartaverse/KartaVP/Tools",
+	Author = "Andrew Hazelden",
+	Version = 5.85,
+	Date = {2026, 1, 24},
+	Description = [[<p>The Kartaverse "kvrViewer" node allows you to quickly view flat, 360VR, 180VR, and fisheye panoramic videos in Resolve/Fusion. It supports cross-platform hardware accelerated rendering on your OpenCL, CUDA, or Metal based GPU using the DCTL fuse API. A new "Effects Template" is available which allows this node to work on clips in an Edit page timeline.</p>
+
+<h2>DCTL Fuse Support Requirements</h2>
+
+<ul>
+	<li>An OpenCL, CUDA, or Metal based GPU</li>
+	<li>Fusion Studio 16-20+ or Resolve 16-20+</li>
+</ul>
+
+<h2>Open Source Software License</h2>
+<p>LGPL 3.0 license</p>
+
+]],
+	Deploy = {
+		"Comps/Kartaverse/KartaVP/kvrViewer/kvrViewer v001.comp",
+		"Fuses/Kartaverse/KartaVP/Warp/kvrViewer.fuse",
+		"Templates/Edit/Effects/KartaVP/Warp/kvrViewer.png",
+		"Templates/Edit/Effects/KartaVP/Warp/kvrViewer.setting",
+	},
+}
