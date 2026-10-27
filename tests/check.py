@@ -26,6 +26,21 @@ assert 'ICS_ControlPage = "Controls"' in template
 assert 'base64,' not in template
 checks = r'''
 local function near(a, b) assert(math.abs(a - b) < 1e-8, a .. " != " .. b) end
+for _, size in ipairs({{1080,1920}, {1920,1080}, {1080,1080}, {1080,1440}, {1440,1080}}) do
+    local w, h = unpack(size)
+    for _, zoom in ipairs({0.01, 0.25, 0.5, 1, 2, 5}) do
+        local z = longEdgeZoom(zoom, w, h)
+        -- Measure the angle between the center and longest-edge boundary ray.
+        local edge = math.max(1, h / w)
+        near(2 * math.atan(edge / z), 2 * math.atan(1 / zoom))
+    end
+end
+near(longEdgeZoom(0.5, 1080, 1920), 8/9)
+near(longEdgeZoom(0.5, 1920, 1080), 0.5)
+near(longEdgeZoom(0.5, 1080, 1080), 0.5)
+near(longEdgeZoom(1, 1080, 1920), 16/9)
+near(longEdgeZoom(1, 1920, 1080), 1)
+
 local function input(value) return {GetValue = function() return {Value = value} end} end
 InWidth, InHeight = input("640"), input("480")
 InOutputFormat = input(0)
@@ -50,7 +65,55 @@ InWidth, InHeight = input("1080"), input("1080")
 w, h = outputSize({})
 assert(w == 1080 and h == 1080)
 
+-- Exercise the real processEye dispatch, not just the normalization helper.
+-- Mock image allocation/GPU execution; inspect what would reach the shader.
 local function noop() end
+local readbacks = 0
+function Image(attrs)
+    return {
+        Width = attrs.IMG_Width, Height = attrs.IMG_Height,
+        OriginalWidth = attrs.IMAT_OriginalWidth, OriginalHeight = attrs.IMAT_OriginalHeight,
+        DownloadGPUMem = function() readbacks = readbacks + 1 end,
+        Fill = noop, OMerge = noop,
+        IsMask = function() return false end,
+    }
+end
+ImgRectI, Pixel = noop, noop
+local captured
+function DVIPComputeNode()
+    captured = {srcSize = {}}
+    return {
+        GetParamBlock = function() return captured end,
+        SetParamBlock = noop, AddSampler = noop, AddInput = noop, AddOutput = noop,
+        RunSession = function() return true end,
+    }
+end
+InInputStereo, InAnaglyph = input(0), input(0)
+InOutputFormat = input(0)
+InConvergence, InDomeTiltAngle, InAngle = input(0), input(0), input(0)
+InCenter = {GetValue = function() return {X = 0.5, Y = 0.5} end}
+InSolidAlpha, InReset, InEdges, InOutputSTMap = input(0), input(0), input(0), input(0)
+local src = Image{IMG_Width = 5760, IMG_Height = 2880,
+    IMAT_OriginalWidth = 5760, IMAT_OriginalHeight = 2880}
+local req = {Time = 0, IsPreCalc = function() return false end}
+for _, planet in ipairs({0, 1}) do
+    InTinyPlanet = input(planet)
+    for _, projection in ipairs({1, 2}) do
+        InImageProjection = input(projection)
+        local multiplier = projection == 2 and 2 or 1
+        for _, zoom in ipairs({0.5, 1, 2}) do
+            InZoom = input(zoom)
+            InOutputFormat = input(1)
+            processEye(req, src, 1)
+            near(captured.fov, zoom * 16/9 * multiplier)
+            assert(captured.isTinyplanet == planet)
+            assert(captured.srcSize[0] == 1080 and captured.srcSize[1] == 1920)
+            InOutputFormat = input(0)
+            processEye(req, src, 1)
+            near(captured.fov, zoom * multiplier)
+        end
+    end
+end
 -- Verify the actual UI definitions and Custom field visibility.
 local controls = {}
 self = {

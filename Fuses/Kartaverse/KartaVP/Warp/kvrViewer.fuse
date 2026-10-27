@@ -46,6 +46,8 @@ Todos
 
 --]]--
 
+-- Adaptive derivative: composition output size and aspect-independent framing.
+-- Upstream provenance and LGPL-3.0 attribution are recorded in README.md.
 FuRegisterClass("kvrViewerAdaptive", CT_Tool, {
 	REGS_Name = "kvrViewer Adaptive",
 	REGS_Category = "Kartaverse\\KartaVP\\Warp",
@@ -667,7 +669,7 @@ function Create()
 --		ACID_Radius = "Zoom",
 --		PC_GrabPriority = 1,
 	})
-	InZoom = self:AddInput("Zoom", "Zoom",{
+	InZoom = self:AddInput("Long-Edge Zoom", "Zoom",{
 		LINKID_DataType = "Number",
 		INPID_InputControl = "ScrewControl",
 --		INPID_InputControl = "SliderControl",
@@ -958,6 +960,10 @@ local function outputSize(req)
 	return w, h
 end
 
+local function longEdgeZoom(zoom, width, height)
+	return zoom / math.min(1, width / height)
+end
+
 function processEye(req, img, eye)
 	local w, h = outputSize(req)
 
@@ -975,6 +981,9 @@ function processEye(req, img, eye)
 	local tinyPlanet = InTinyPlanet:GetValue(req).Value
 	local imageProjection = InImageProjection:GetValue(req).Value
 	local projectionName
+	if imageProjection == 1 or imageProjection == 2 then
+		fov = longEdgeZoom(fov, w, h)
+	end
 
 	local src = img
 	local dst
@@ -1024,11 +1033,11 @@ function processEye(req, img, eye)
 	elseif imageProjection == 1 then
 		projectionName = "360VR"
 		meta.Viewer.Projection.TinyPlanet = TinyPlanet
-		meta.Viewer.Zoom = InZoom:GetValue(req).Value
+		meta.Viewer.Zoom = fov
 	elseif imageProjection == 2 then
 		projectionName = "180VR"
 		meta.Viewer.Projection.TinyPlanet = TinyPlanet
-		meta.Viewer.Zoom = InZoom:GetValue(req).Value
+		meta.Viewer.Zoom = fov
 	elseif imageProjection == 3 then
 		projectionName = "Fisheye"
 		meta.Viewer.fov = InFieldOfView:GetValue(req).Value
