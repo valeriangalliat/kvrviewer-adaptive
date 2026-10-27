@@ -44,3 +44,8 @@ Run `python3 tests/check.py` with Resolve installed on macOS, or set `LUA_LIBRAR
 to a Lua 5.1/LuaJIT shared library. The runner compiles the Fuse and template and
 uses a mock host to check their controls. Rendering changes also need testing in
 Resolve.
+
+## Projection default
+
+The Edit-page wrapper defaults to 360VR, matching direct Fusion use. Other
+projection and stereo defaults are unchanged.
