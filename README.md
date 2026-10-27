@@ -1,27 +1,25 @@
 # kvrViewer Adaptive
 
-A standalone derivative of KartaVR's KVRViewer for DaVinci Resolve/Fusion.
+KVRViewer with long-edge zoom and faster 360° playback in DaVinci Resolve/Fusion.
 
-## Upstream source
+## What's different
 
-The first commit imports the complete KVRViewer package, byte-for-byte, from
-[We Suck Less / Reactor](https://gitlab.com/WeSuckLess/Reactor), directory
-`Atoms/com.AndrewHazelden.KartaVP.Tools.kvrViewer`, at commit
-`aeaaae678d010655a7c9ed8b866a96811f8db8bc` (package version 5.85).
+- **Consistent zoom across aspect ratios.** Long-Edge Zoom keeps the same view
+  along the longest edge when switching between portrait, landscape, and square.
+  It uses the original zoom control and on-screen handle, in both perspective
+  and Tiny Planet modes. Higher values zoom in; lower values widen the view.
+- **Faster playback.** Mono 360VR avoids forced GPU-to-CPU transfers, and the
+  shader skips unused projection calculations. This made playback much faster
+  in our testing; gains will depend on your setup.
+- **Simple output sizes.** Choose 1920×1080, 1080×1920, or Custom. Custom accepts
+  whole-pixel dimensions from 1 to 16384, without sliders. No Auto setting that
+  confuses source, composition, and timeline dimensions.
+- **360VR by default**, including in the Edit-page wrapper. Zoom defaults to 0.5;
+  the original stereo and Tiny Planet defaults are unchanged.
 
-Reactor is the package manager and also hosts this package's source. This
-repository contains only KVRViewer's package, without the rest of Reactor.
+## Install and use
 
-KVRViewer is by David Kohen and Andrew Hazelden, with contributions and shader
-origins credited in the Fuse header. The upstream source and package manifest
-declare LGPL-3.0. Their notices and attribution are retained. Changes in this
-repository are distributed under the same license.
-
-The root import commit is the permanent, unmodified upstream baseline. Later
-commits contain this README and our changes, so the derivative can be reviewed
-with an ordinary Git diff.
-
-## Install on macOS
+On macOS:
 
 ```sh
 git clone https://github.com/valeriangalliat/kvrviewer-adaptive.git
@@ -29,57 +27,48 @@ cd kvrviewer-adaptive
 ./scripts/install.sh
 ```
 
-Restart Resolve after the first install. Add kvrViewer Adaptive between MediaIn
-and MediaOut in the clip's Fusion graph. The installer copies the renamed Fuse
-and Edit-page wrapper into your user Fusion folders, keeping stock KVRViewer
-intact. Reactor is not required.
+Restart Resolve after the first install. In the clip's Fusion graph, add
+**kvrViewer Adaptive** between MediaIn and MediaOut. For stitched 360 footage,
+choose 360VR and Mono, then select your output resolution.
 
-To update, pull changes and rerun the installer. Existing Fusion nodes can load
-Fuse changes via Settings → Edit Code → Reload Fuse; wrapper layout changes
-require a new effect instance.
+**Use it directly in Fusion for full source quality.** In our tests, the
+Edit-page effect received a 5760×2880 panorama already resized to 1080×1920.
+Direct Fusion received the full source. The Edit-page wrapper is still available
+under Effects → Custom 360, with a warning about this limitation. Stretch fixes
+its input layout, but cannot recover lost detail.
+
+The installer keeps stock KVRViewer intact. To update, pull changes and rerun it.
+Existing Fusion nodes can reload via **Settings → Edit Code → Reload Fuse**;
+wrapper layout changes require a new effect instance.
+
+## Zoom compatibility
+
+Zoom is normalized to the output's longest edge, rather than always its width.
+For square pixels:
+
+```text
+internal KVR zoom = long-edge zoom / min(1, width / height)
+```
+
+For example, Long-Edge Zoom 0.5625 matches stock Zoom 1 in 9:16 and stock Zoom
+0.5625 in 16:9. Existing zoom animations are not converted automatically.
+180VR retains its original extra zoom multiplier; fisheye keeps its original
+field-of-view control. Adaptive refers to zoom, not automatic timeline sizing.
+
+## Source and license
+
+Based on KVRViewer by David Kohen and Andrew Hazelden, distributed through
+[Reactor](https://gitlab.com/WeSuckLess/Reactor/-/tree/master/Atoms/com.AndrewHazelden.KartaVP.Tools.kvrViewer).
+The first commit is an unmodified import of package 5.85 at upstream commit
+`aeaaae678d010655a7c9ed8b866a96811f8db8bc`. Later commits separate our changes
+by feature. The original package manifest and example remain for reference.
+
+LGPL-3.0, as declared upstream. Attribution remains in the source; license texts
+are in [COPYING](COPYING) and [COPYING.LESSER](COPYING.LESSER).
 
 ## Development
 
 Run `python3 tests/check.py` with Resolve installed on macOS, or set `LUA_LIBRARY`
-to a Lua 5.1/LuaJIT shared library. The runner compiles the Fuse and template and
-uses a mock host to check their controls. Rendering changes also need testing in
-Resolve.
-
-## Projection default
-
-The Edit-page wrapper defaults to 360VR, matching direct Fusion use. Other
-projection and stereo defaults are unchanged.
-
-## Source quality
-
-Use the node directly in Fusion for full source quality. In our tests, the
-Edit-page effect received a 5760×2880 panorama already resized to 1080×1920;
-direct Fusion received the full source. Stretch fixes the Edit-page input layout
-but cannot recover lost detail. Its wrapper shows a warning at the top of
-Controls, without duplicating the logo. Direct Fusion nodes have no warning.
-
-## Output resolution
-
-Choose 1920×1080, 1080×1920, or Custom. Custom shows two text-entry fields for
-whole-pixel dimensions from 1 to 16384. Landscape is the default. Explicit sizes
-replace Auto, which followed input dimensions rather than the delivery format.
-Flat projection still passes its input through unchanged.
-
-## Long-Edge Zoom
-
-Zoom keeps the same coverage along the longest output edge across portrait,
-landscape, and square. It uses the original control and on-screen handle in both
-perspective and Tiny Planet modes, with a default of 0.5.
-
-For square pixels, internal KVR zoom is
-`longEdgeZoom / min(1, width / height)`. Long-Edge Zoom 0.5625 matches stock Zoom
-1 in 9:16 and stock Zoom 0.5625 in 16:9. Existing animations are not converted.
-180VR retains its original extra multiplier; fisheye keeps its original FOV
-control. Adaptive refers to zoom, not automatic timeline sizing.
-
-## Playback optimizations
-
-Mono 360VR avoids forced GPU-to-CPU input/output transfers. The shader skips
-unused projection calculations while retaining fractional blending. Other
-processing paths keep their readbacks. Playback improved substantially in our
-testing; results depend on the setup. Check a full-quality export too.
+to a Lua 5.1/LuaJIT shared library. The checks cover Lua compilation, controls,
+output sizing, zoom math, and shader parameter dispatch using a mock GPU host.
+Check actual playback and a full-quality export in Resolve when changing rendering.
